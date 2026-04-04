@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post - Poor Contrast</title>
+    <style>
+        body {
+            font-family: Georgia, serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            line-height: 1.6;
+        }
+        /* VIOLATION 1: Poor contrast - light gray text on white background */
+        .subtitle {
+            color: #999999;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        /* VIOLATION 2: Poor contrast - medium gray on white */
+        .meta {
+            color: #aaaaaa;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        /* VIOLATION 3: Poor contrast - yellow text on white background */
+        .highlight {
+            background-color: #ffffff;
+            color: #ffeb3b;
+            padding: 2px 4px;
+            font-weight: bold;
+        }
+        /* VIOLATION 4: Poor contrast - light blue link on white */
+        a {
+            color: #b3d9ff;
+            text-decoration: none;
+        }
+        /* VIOLATION 5: Poor contrast - very light gray on light background */
+        .sidebar {
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .sidebar h3 {
+            color: #cccccc;
+            margin-top: 0;
+        }
+        .sidebar p {
+            color: #d0d0d0;
+            font-size: 14px;
+        }
+        /* VIOLATION 6: Button with poor contrast */
+        .read-more {
+            background-color: #e8e8e8;
+            color: #c0c0c0;
+            padding: 10px 20px;
+            border: 1px solid #d8d8d8;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>The Future of Web Accessibility</h1>
+        
+        <!-- VIOLATION 1: Poor contrast subtitle -->
+        <p class="subtitle">Understanding why contrast matters for all users</p>
+        
+        <!-- VIOLATION 2: Poor contrast metadata -->
+        <p class="meta">Published on January 15, 2024 | By Jane Developer</p>
+        
+        <p>
+            Web accessibility is crucial for ensuring that everyone can access and use 
+            websites effectively. One of the most common issues is 
+            <span class="highlight">insufficient color contrast</span> between text and 
+            background elements.
+        </p>
+        
+        <p>
+            According to WCAG 2.1 guidelines, normal text should have a contrast ratio of 
+            at least 4.5:1, while large text should have a ratio of at least 3:1. However, 
+            many websites still fail to meet these basic requirements.
+        </p>
+        
+        <!-- VIOLATION 3 & 4: Poor contrast highlighted text and link -->
+        <p>
+            For more information, please visit our 
+            <a href="#">accessibility guidelines page</a> where you'll find detailed 
+            information about creating accessible web content.
+        </p>
+        
+        <!-- VIOLATION 5: Poor contrast sidebar -->
+        <aside class="sidebar">
+            <h3>Related Topics</h3>
+            <p>
+                Learn more about WCAG compliance, screen reader compatibility, and 
+                keyboard navigation best practices.
+            </p>
+        </aside>
+        
+        <p>
+            Color contrast affects not only users with visual impairments but also 
+            anyone viewing content in bright sunlight or on lower-quality displays.
+        </p>
+        
+        <!-- VIOLATION 6: Button with poor contrast -->
+        <button class="read-more">Read More Articles</button>
+    </article>
+</body>
+</html>

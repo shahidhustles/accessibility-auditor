@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter Signup - Keyboard Trap</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .page-content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+        }
+        /* VIOLATION 1: Modal overlay without escape mechanism */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+        .modal-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* VIOLATION 2: Modal without close button */
+        .modal {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+        }
+        .modal h2 {
+            margin-top: 0;
+            color: #2c5282;
+        }
+        .modal input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .modal button {
+            background-color: #4299e1;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .trigger-btn {
+            background-color: #48bb78;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        /* VIOLATION 3: Focus trap container without proper management */
+        .form-section {
+            border: 2px solid #e2e8f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-content">
+        <h1>Welcome to Our Blog</h1>
+        <p>Discover the latest articles on web development, design, and technology.</p>
+        
+        <!-- VIOLATION 4: Button triggers modal without proper focus management -->
+        <button class="trigger-btn" onclick="openModal()">Subscribe to Newsletter</button>
+        
+        <div class="form-section">
+            <h2>Leave a Comment</h2>
+            <form>
+                <label for="comment-name">Name:</label>
+                <input type="text" id="comment-name" name="name">
+                
+                <label for="comment-email">Email:</label>
+                <input type="email" id="comment-email" name="email">
+                
+                <label for="comment-text">Comment:</label>
+                <textarea id="comment-text" name="comment" rows="4" style="width: 100%; padding: 10px;"></textarea>
+                
+                <button type="submit">Post Comment</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- VIOLATION 5: Modal that traps focus without ESC key handler -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" role="dialog" aria-labelledby="modal-title">
+            <h2 id="modal-title">Subscribe to Our Newsletter</h2>
+            <p>Get the latest updates delivered to your inbox!</p>
+            
+            <form id="newsletter-form">
+                <label for="modal-name">Name:</label>
+                <input type="text" id="modal-name" required>
+                
+                <label for="modal-email">Email:</label>
+                <input type="email" id="modal-email" required>
+                
+                <label for="modal-preferences">Interests:</label>
+                <select id="modal-preferences">
+                    <option>Web Development</option>
+                    <option>Design</option>
+                    <option>Technology</option>
+                    <option>Business</option>
+                </select>
+                
+                <div style="margin-top: 20px;">
+                    <button type="submit">Subscribe</button>
+                    <!-- VIOLATION 6: Close functionality only via JavaScript, no ESC key -->
+                    <button type="button" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        /* VIOLATION 7: Focus trap implementation without escape hatch */
+        function openModal() {
+            const modal = document.getElementById('modalOverlay');
+            modal.classList.add('active');
+            
+            // Focus first input but no focus trap management
+            document.getElementById('modal-name').focus();
+            
+            // VIOLATION 8: No keyboard event listeners for ESC key
+            // Missing: document.addEventListener('keydown', handleEscape);
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('modalOverlay');
+            modal.classList.remove('active');
+            // VIOLATION: No focus restoration to trigger button
+        }
+        
+        // VIOLATION: No focus trapping within modal - users can tab to page content behind
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for subscribing!');
+            closeModal();
+        });
+        
+        // VIOLATION: Clicking overlay doesn't close modal
+        // Missing proper event delegation
+    </script>
+</body>
+</html>

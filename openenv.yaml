@@ -1,0 +1,28 @@
+name: accessibility-auditor
+version: 0.1.0
+description: "Web accessibility testing environment using Playwright and axe-core. Agents learn to audit websites for WCAG violations across 3 difficulty levels."
+tags:
+  - openenv
+  - accessibility
+  - wcag
+  - playwright
+  - web-testing
+author: Richie Rich
+difficulty_levels:
+  - easy
+  - medium
+  - hard
+test_types:
+  - image_alt_text
+  - form_labels
+  - color_contrast
+  - keyboard_navigation
+  - aria_labels
+  - heading_structure
+  - landmark_roles
+  - focus_indicators
+  - skip_links
+  - language_attributes
+  - table_headers
+  - video_captions
+

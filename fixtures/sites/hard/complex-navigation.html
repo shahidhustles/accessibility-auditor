@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Site - Complex Navigation Issues</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        /* VIOLATION 1: Mega menu without keyboard navigation support */
+        .navbar {
+            background-color: #2c3e50;
+            padding: 0;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+        }
+        .nav-item {
+            position: relative;
+        }
+        .nav-link {
+            display: block;
+            padding: 20px 25px;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .nav-link:hover {
+            background-color: #34495e;
+        }
+        /* VIOLATION 2: Dropdown menu without ARIA attributes */
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 250px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .nav-item:hover .dropdown {
+            display: block;
+        }
+        .dropdown-link {
+            display: block;
+            padding: 12px 20px;
+            color: #2c3e50;
+            text-decoration: none;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .dropdown-link:hover {
+            background-color: #ecf0f1;
+        }
+        /* VIOLATION 3: Multi-level menu without proper focus management */
+        .submenu {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .dropdown-item:hover .submenu {
+            display: block;
+        }
+        .dropdown-item {
+            position: relative;
+        }
+        .mega-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .nav-item:hover .mega-menu {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+        }
+        .mega-column h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .mega-column ul {
+            list-style: none;
+        }
+        .mega-column a {
+            display: block;
+            padding: 8px 0;
+            color: #7f8c8d;
+            text-decoration: none;
+        }
+        .mega-column a:hover {
+            color: #3498db;
+        }
+        .content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        /* VIOLATION: Breadcrumb navigation without proper semantics */
+        .breadcrumb {
+            padding: 15px 0;
+            color: #7f8c8d;
+        }
+        .breadcrumb span {
+            margin: 0 5px;
+        }
+        /* VIOLATION: Pagination without keyboard support */
+        .pagination {
+            display: flex;
+            gap: 5px;
+            margin: 30px 0;
+        }
+        .page-link {
+            padding: 10px 15px;
+            background-color: white;
+            border: 1px solid #dee2e6;
+            cursor: pointer;
+            text-decoration: none;
+            color: #2c3e50;
+        }
+        .page-link:hover {
+            background-color: #e9ecef;
+        }
+        .page-link.active {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        .sidebar {
+            width: 250px;
+            background: white;
+            padding: 20px;
+            float: left;
+            margin-right: 30px;
+        }
+        .main-content {
+            overflow: hidden;
+        }
+        .filter-group {
+            margin-bottom: 25px;
+        }
+        .filter-group h3 {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+        .checkbox-item {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- VIOLATION 4: Navigation without nav element or proper role -->
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="nav-item">
+                <a href="#" class="nav-link">Home</a>
+            </div>
+            
+            <!-- VIOLATION 5: Dropdown without aria-haspopup, aria-expanded -->
+            <div class="nav-item">
+                <a href="#" class="nav-link">Shop</a>
+                <div class="dropdown">
+                    <a href="#" class="dropdown-link">New Arrivals</a>
+                    <a href="#" class="dropdown-link">Best Sellers</a>
+                    
+                    <!-- VIOLATION 6: Nested menu without keyboard navigation -->
+                    <div class="dropdown-item">
+                        <a href="#" class="dropdown-link">Categories ›</a>
+                        <div class="submenu">
+                            <a href="#" class="dropdown-link">Electronics</a>
+                            <a href="#" class="dropdown-link">Clothing</a>
+                            <a href="#" class="dropdown-link">Home & Garden</a>
+                            <a href="#" class="dropdown-link">Sports</a>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="dropdown-link">Sale</a>
+                </div>
+            </div>
+            
+            <!-- VIOLATION 7: Mega menu without keyboard support or ARIA -->
+            <div class="nav-item">
+                <a href="#" class="nav-link">Departments</a>
+                <div class="mega-menu">
+                    <div class="mega-column">
+                        <h3>Electronics</h3>
+                        <ul>
+                            <li><a href="#">Laptops</a></li>
+                            <li><a href="#">Smartphones</a></li>
+                            <li><a href="#">Tablets</a></li>
+                            <li><a href="#">Cameras</a></li>
+                            <li><a href="#">Audio</a></li>
+                        </ul>
+                    </div>
+                    <div class="mega-column">
+                        <h3>Clothing</h3>
+                        <ul>
+                            <li><a href="#">Men's</a></li>
+                            <li><a href="#">Women's</a></li>
+                            <li><a href="#">Kids'</a></li>
+                            <li><a href="#">Shoes</a></li>
+                            <li><a href="#">Accessories</a></li>
+                        </ul>
+                    </div>
+                    <div class="mega-column">
+                        <h3>Home & Garden</h3>
+                        <ul>
+                            <li><a href="#">Furniture</a></li>
+                            <li><a href="#">Kitchen</a></li>
+                            <li><a href="#">Bedding</a></li>
+                            <li><a href="#">Garden Tools</a></li>
+                            <li><a href="#">Decor</a></li>
+                        </ul>
+                    </div>
+                    <div class="mega-column">
+                        <h3>Sports</h3>
+                        <ul>
+                            <li><a href="#">Fitness</a></li>
+                            <li><a href="#">Outdoor</a></li>
+                            <li><a href="#">Team Sports</a></li>
+                            <li><a href="#">Water Sports</a></li>
+                            <li><a href="#">Winter Sports</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-item">
+                <a href="#" class="nav-link">Deals</a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="#" class="nav-link">About</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content">
+        <!-- VIOLATION 8: Breadcrumb without nav element or aria-label -->
+        <div class="breadcrumb">
+            <a href="#">Home</a>
+            <span>›</span>
+            <a href="#">Electronics</a>
+            <span>›</span>
+            <a href="#">Laptops</a>
+            <span>›</span>
+            <span>Gaming Laptops</span>
+        </div>
+        
+        <h1>Gaming Laptops</h1>
+        
+        <!-- VIOLATION 9: Filter sidebar without proper landmarks -->
+        <div class="sidebar">
+            <h2>Filters</h2>
+            
+            <div class="filter-group">
+                <h3>Price Range</h3>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="price1">
+                    <label for="price1">Under $500</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="price2">
+                    <label for="price2">$500 - $1000</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="price3">
+                    <label for="price3">Over $1000</label>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <h3>Brand</h3>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="brand1">
+                    <label for="brand1">Dell</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="brand2">
+                    <label for="brand2">HP</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="brand3">
+                    <label for="brand3">Lenovo</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <p>Showing 48 results</p>
+            
+            <!-- Product listing would go here -->
+            
+            <!-- VIOLATION 10: Pagination without proper role and keyboard support -->
+            <div class="pagination">
+                <a href="#" class="page-link" onclick="return false;">‹ Previous</a>
+                <a href="#" class="page-link active" onclick="return false;">1</a>
+                <a href="#" class="page-link" onclick="return false;">2</a>
+                <a href="#" class="page-link" onclick="return false;">3</a>
+                <a href="#" class="page-link" onclick="return false;">4</a>
+                <a href="#" class="page-link" onclick="return false;">5</a>
+                <a href="#" class="page-link" onclick="return false;">Next ›</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // VIOLATION 11: No keyboard event handlers for dropdown menus
+        // VIOLATION 12: No focus trapping or ESC key to close menus
+        // Missing: Arrow key navigation, Enter/Space to activate
+        // Missing: Focus management when opening/closing menus
+    </script>
+</body>
+</html>

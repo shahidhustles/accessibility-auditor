@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form - Missing Labels</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f7fafc;
+        }
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4299e1;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3182ce;
+        }
+        .hint {
+            font-size: 12px;
+            color: #718096;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Contact Us</h1>
+        <p>Fill out the form below and we'll get back to you soon.</p>
+        
+        <form>
+            <!-- VIOLATION 1: Input without label -->
+            <div class="form-group">
+                <input type="text" name="name" placeholder="Your Name">
+            </div>
+            
+            <!-- VIOLATION 2: Input without label (placeholder is not sufficient) -->
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Email Address">
+                <div class="hint">We'll never share your email with anyone else.</div>
+            </div>
+            
+            <!-- VIOLATION 3: Input with label but no for/id association -->
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" name="phone" placeholder="(555) 123-4567">
+            </div>
+            
+            <!-- VIOLATION 4: Select without label -->
+            <div class="form-group">
+                <select name="subject">
+                    <option value="">Select a subject</option>
+                    <option value="sales">Sales Inquiry</option>
+                    <option value="support">Technical Support</option>
+                    <option value="billing">Billing Question</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <!-- VIOLATION 5: Textarea without label -->
+            <div class="form-group">
+                <textarea name="message" rows="5" placeholder="Your message..."></textarea>
+            </div>
+            
+            <!-- VIOLATION 6: Checkbox without associated label -->
+            <div class="form-group">
+                <input type="checkbox" name="newsletter" id="newsletter-check">
+                <span>Subscribe to our newsletter</span>
+            </div>
+            
+            <!-- VIOLATION 7: Radio buttons without proper labels -->
+            <div class="form-group">
+                <p>Preferred contact method:</p>
+                <input type="radio" name="contact-method" value="email"> Email
+                <input type="radio" name="contact-method" value="phone"> Phone
+            </div>
+            
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+</body>
+</html>

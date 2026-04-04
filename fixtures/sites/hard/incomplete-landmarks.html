@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Portal - Incomplete Landmarks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        /* VIOLATION: Using div instead of header */
+        .site-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        /* VIOLATION: Navigation without nav element */
+        .top-menu {
+            display: flex;
+            gap: 20px;
+        }
+        .top-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+        }
+        .top-menu a:hover {
+            background-color: #34495e;
+            border-radius: 4px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            gap: 30px;
+        }
+        /* VIOLATION: Sidebar without aside element */
+        .left-sidebar {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            height: fit-content;
+        }
+        .category-list {
+            list-style: none;
+        }
+        .category-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .category-list a {
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        /* VIOLATION: Main content without main element */
+        .content-area {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+        }
+        .article {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        .article h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .article-meta {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        /* VIOLATION: Right sidebar without aside */
+        .right-sidebar {
+            height: fit-content;
+        }
+        .widget {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .widget h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .trending-list {
+            list-style: none;
+        }
+        .trending-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .trending-list a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        /* VIOLATION: Footer without footer element */
+        .site-footer {
+            background-color: #34495e;
+            color: white;
+            margin-top: 50px;
+            padding: 40px 0 20px;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        .footer-section h4 {
+            margin-bottom: 15px;
+        }
+        .footer-section ul {
+            list-style: none;
+        }
+        .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            display: block;
+            padding: 5px 0;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px solid #4a5f7f;
+            color: #bdc3c7;
+        }
+        /* VIOLATION: Search form without proper landmark */
+        .search-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- VIOLATION 1: Header using div instead of header element -->
+    <div class="site-header">
+        <div class="header-content">
+            <div class="logo">NewsPortal</div>
+            <!-- VIOLATION 2: Primary navigation without nav element or role -->
+            <div class="top-menu">
+                <a href="#">Home</a>
+                <a href="#">World</a>
+                <a href="#">Politics</a>
+                <a href="#">Business</a>
+                <a href="#">Technology</a>
+                <a href="#">Sports</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- VIOLATION 3: Sidebar navigation without aside or nav element -->
+        <div class="left-sidebar">
+            <h2>Categories</h2>
+            <!-- VIOLATION 4: Secondary navigation without nav role -->
+            <ul class="category-list">
+                <li><a href="#">Breaking News</a></li>
+                <li><a href="#">Investigative</a></li>
+                <li><a href="#">Opinion</a></li>
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Multimedia</a></li>
+                <li><a href="#">Weather</a></li>
+                <li><a href="#">Entertainment</a></li>
+            </ul>
+            
+            <!-- VIOLATION 5: Search without proper landmark -->
+            <div class="search-box" style="margin-top: 30px;">
+                <h3>Search</h3>
+                <input type="text" placeholder="Search news...">
+            </div>
+        </div>
+        
+        <!-- VIOLATION 6: Main content area without main element -->
+        <div class="content-area">
+            <h1>Latest News</h1>
+            
+            <!-- VIOLATION 7: Articles without article elements -->
+            <div class="article">
+                <h2>Major Climate Summit Concludes with New Agreements</h2>
+                <div class="article-meta">
+                    <span>By Sarah Johnson</span> | 
+                    <span>January 22, 2024</span> | 
+                    <span>Environment</span>
+                </div>
+                <p>
+                    World leaders have reached a historic agreement on climate action following 
+                    two weeks of intensive negotiations. The summit addressed key concerns about 
+                    carbon emissions and renewable energy targets.
+                </p>
+                <a href="#">Read more...</a>
+            </div>
+            
+            <div class="article">
+                <h2>Tech Industry Unveils Revolutionary AI Platform</h2>
+                <div class="article-meta">
+                    <span>By Michael Chen</span> | 
+                    <span>January 22, 2024</span> | 
+                    <span>Technology</span>
+                </div>
+                <p>
+                    Leading technology companies have collaborated to release a groundbreaking 
+                    artificial intelligence platform that promises to transform multiple industries.
+                </p>
+                <a href="#">Read more...</a>
+            </div>
+            
+            <div class="article">
+                <h2>Global Markets Show Strong Recovery</h2>
+                <div class="article-meta">
+                    <span>By Emily Rodriguez</span> | 
+                    <span>January 21, 2024</span> | 
+                    <span>Business</span>
+                </div>
+                <p>
+                    International stock markets have demonstrated robust growth this quarter, 
+                    exceeding analyst expectations and signaling economic resilience.
+                </p>
+                <a href="#">Read more...</a>
+            </div>
+        </div>
+        
+        <!-- VIOLATION 8: Complementary content without aside element -->
+        <div class="right-sidebar">
+            <!-- VIOLATION 9: Widget sections without proper semantic structure -->
+            <div class="widget">
+                <h3>Trending Now</h3>
+                <ul class="trending-list">
+                    <li><a href="#">Breaking: Major policy announcement</a></li>
+                    <li><a href="#">Sports: Championship finals today</a></li>
+                    <li><a href="#">Tech: New smartphone released</a></li>
+                    <li><a href="#">Health: Study reveals findings</a></li>
+                    <li><a href="#">Culture: Award ceremony highlights</a></li>
+                </ul>
+            </div>
+            
+            <div class="widget">
+                <h3>Newsletter</h3>
+                <p>Subscribe to get daily news updates:</p>
+                <input type="email" placeholder="Your email" 
+                       style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px;">
+                <button style="width: 100%; padding: 10px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    Subscribe
+                </button>
+            </div>
+            
+            <div class="widget">
+                <h3>Follow Us</h3>
+                <p>Stay connected on social media</p>
+                <!-- Social media links would go here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- VIOLATION 10: Footer without footer element -->
+    <div class="site-footer">
+        <div class="footer-content">
+            <!-- VIOLATION 11: Footer navigation without nav element -->
+            <div class="footer-section">
+                <h4>News</h4>
+                <ul>
+                    <li><a href="#">World News</a></li>
+                    <li><a href="#">Local News</a></li>
+                    <li><a href="#">Business</a></li>
+                    <li><a href="#">Technology</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Archives</a></li>
+                    <li><a href="#">Newsletters</a></li>
+                    <li><a href="#">Podcasts</a></li>
+                    <li><a href="#">Videos</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press Room</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- VIOLATION 12: Copyright info without contentinfo role -->
+        <div class="footer-bottom">
+            <p>&copy; 2024 NewsPortal. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
