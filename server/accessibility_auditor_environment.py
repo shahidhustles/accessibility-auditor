@@ -64,12 +64,12 @@ class AccessibilityEnvironment(Environment):
         self._ground_truth_violations: List[Dict[str, Any]] = []
         self._found_violations: List[Dict[str, Any]] = []
 
-    def reset(self) -> dict:
+    def reset(self) -> AccessibilityObservation:
         """
         Start new episode with random difficulty and fixture.
         
         Returns:
-            Observation dict with initial page state
+            AccessibilityObservation with initial page state
         """
         # Clean up previous episode
         try:
@@ -119,15 +119,15 @@ class AccessibilityEnvironment(Environment):
             last_action_error=None
         )
 
-    def step(self, action: dict) -> tuple:
+    def step(self, action: AccessibilityAction) -> AccessibilityObservation:
         """
         Execute accessibility test action.
         
         Args:
-            action: Action dict with test_type, selector, parameters
+            action: AccessibilityAction with test_type, selector, parameters
             
         Returns:
-            (observation, reward, done, info) tuple
+            AccessibilityObservation with results
         """
         if self._current_state is None:
             raise RuntimeError("Environment not initialized. Call reset() first.")
@@ -135,10 +135,15 @@ class AccessibilityEnvironment(Environment):
         self._episode_step += 1
         self._current_state.episode_step = self._episode_step
         
-        # Parse action
-        test_type = action.get("test_type", "")
-        selector = action.get("selector")
-        parameters = action.get("parameters", {})
+        # Parse action - handle both dict and AccessibilityAction
+        if isinstance(action, dict):
+            test_type = action.get("test_type", "")
+            selector = action.get("selector")
+            parameters = action.get("parameters", {})
+        else:
+            test_type = action.test_type
+            selector = action.selector
+            parameters = action.parameters or {}
         
         # Execute test
         violations_found = []
@@ -168,13 +173,7 @@ class AccessibilityEnvironment(Environment):
             or test_type == "complete_audit"
         )
         
-        # Create observation
-        observation = self._create_observation(
-            violations_found=violations_found,
-            last_action_error=error_message
-        )
-        
-        # Build info dict
+        # Build info dict for metadata
         info = {
             "test_type": test_type,
             "violations_count": len(violations_found),
@@ -182,7 +181,16 @@ class AccessibilityEnvironment(Environment):
             "ground_truth_count": len(self._ground_truth_violations),
         }
         
-        return observation, reward, done, info
+        # Create observation with reward, done, and metadata
+        observation = self._create_observation(
+            violations_found=violations_found,
+            last_action_error=error_message,
+            reward=reward,
+            done=done,
+            metadata=info
+        )
+        
+        return observation
 
     @property
     def state(self) -> dict:
@@ -376,25 +384,31 @@ class AccessibilityEnvironment(Environment):
     def _create_observation(
         self,
         violations_found: List[Dict[str, Any]],
-        last_action_error: Optional[str]
-    ) -> dict:
+        last_action_error: Optional[str],
+        reward: float = 0.0,
+        done: bool = False,
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> AccessibilityObservation:
         """
         Build observation from current page state.
         
         Args:
             violations_found: Violations from last action
             last_action_error: Error message if action failed
+            reward: Reward value for this step
+            done: Whether episode is complete
+            metadata: Additional metadata dict
             
         Returns:
-            Observation dict
+            AccessibilityObservation object
         """
         try:
             # Get page metadata
-            metadata = self.browser_manager.get_page_metadata()
+            page_meta = self.browser_manager.get_page_metadata()
             page_metadata = PageMetadata(
-                url=metadata["url"],
-                title=metadata["title"],
-                viewport_size=metadata["viewport"],
+                url=page_meta["url"],
+                title=page_meta["title"],
+                viewport_size=page_meta["viewport"],
                 timestamp=datetime.utcnow().isoformat(),
             )
             
@@ -417,25 +431,32 @@ class AccessibilityEnvironment(Environment):
                 violations_found=formatted_violations,
                 coverage_metrics=coverage_metrics,
                 last_action_error=last_action_error,
+                reward=reward,
+                done=done,
+                metadata=metadata or {},
             )
             
-            return observation.model_dump()
+            return observation
             
         except Exception as e:
             # Fallback minimal observation
-            return {
-                "page_metadata": {
-                    "url": self._current_state.target_url if self._current_state else "",
-                    "title": "Error",
-                    "viewport_size": {"width": 1280, "height": 720},
-                    "timestamp": datetime.utcnow().isoformat(),
-                },
-                "screenshot": None,
-                "dom_summary": "",
-                "violations_found": [],
-                "coverage_metrics": {},
-                "last_action_error": f"Observation creation failed: {str(e)}",
-            }
+            fallback_page_metadata = PageMetadata(
+                url=self._current_state.target_url if self._current_state else "",
+                title="Error",
+                viewport_size={"width": 1280, "height": 720},
+                timestamp=datetime.utcnow().isoformat(),
+            )
+            return AccessibilityObservation(
+                page_metadata=fallback_page_metadata,
+                screenshot=None,
+                dom_summary="",
+                violations_found=[],
+                coverage_metrics={},
+                last_action_error=f"Observation creation failed: {str(e)}",
+                reward=reward,
+                done=done,
+                metadata=metadata or {},
+            )
 
     def _format_violation(self, violation: Dict[str, Any]) -> ViolationDetail:
         """

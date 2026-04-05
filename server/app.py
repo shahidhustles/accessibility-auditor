@@ -36,9 +36,11 @@ except Exception as e:  # pragma: no cover
     ) from e
 
 try:
-    from .accessibility_auditor_environment import AccessibilityAuditorEnvironment
+    from .accessibility_auditor_environment import AccessibilityEnvironment
+    from ..models import AccessibilityAction, AccessibilityObservation
 except ModuleNotFoundError:
-    from server.accessibility_auditor_environment import AccessibilityAuditorEnvironment
+    from server.accessibility_auditor_environment import AccessibilityEnvironment
+    from models import AccessibilityAction, AccessibilityObservation
 
 
 # Create the FastAPI app - create_fastapi_app automatically:
@@ -47,7 +49,7 @@ except ModuleNotFoundError:
 # - Creates /state endpoint for getting current state
 # - Handles WebSocket connections for persistent sessions
 # - Provides health check endpoints
-app = create_fastapi_app(AccessibilityAuditorEnvironment)
+app = create_fastapi_app(AccessibilityEnvironment, AccessibilityAction, AccessibilityObservation)
 
 
 def main(host: str = "0.0.0.0", port: int = 8000):

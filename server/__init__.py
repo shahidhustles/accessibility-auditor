@@ -6,6 +6,6 @@
 
 """Accessibility Auditor environment server components."""
 
-from .accessibility_auditor_environment import AccessibilityAuditorEnvironment
+from .accessibility_auditor_environment import AccessibilityEnvironment
 
-__all__ = ["AccessibilityAuditorEnvironment"]
+__all__ = ["AccessibilityEnvironment"]

@@ -6,11 +6,11 @@
 
 """Accessibility Auditor Environment."""
 
-from .client import AccessibilityAuditorEnv
-from .models import AccessibilityAuditorAction, AccessibilityAuditorObservation
+from .client import AccessibilityEnv
+from .models import AccessibilityAction, AccessibilityObservation
 
 __all__ = [
-    "AccessibilityAuditorAction",
-    "AccessibilityAuditorObservation",
-    "AccessibilityAuditorEnv",
+    "AccessibilityAction",
+    "AccessibilityObservation",
+    "AccessibilityEnv",
 ]
