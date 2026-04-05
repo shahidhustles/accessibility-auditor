@@ -11,10 +11,10 @@ import json
 from openai import OpenAI
 
 # Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from client import AccessibilityEnv
-from models import AccessibilityAction
+from accessibility_auditor.client import AccessibilityEnv
+from accessibility_auditor.models import AccessibilityAction
 
 
 # Environment variables (required by hackathon guidelines)
@@ -61,10 +61,9 @@ Do not include explanations or additional text."""
 def run_episode(client: AccessibilityEnv, llm_client: OpenAI, max_steps: int = 20) -> Dict[str, Any]:
     """Run a single episode with the LLM agent."""
     
-    # Reset environment
-    result = client.reset()
-    observation = result.observation
-    state = result.state
+    # Reset environment - returns (observation, reward, done, info)
+    observation, reward, done, info = client.reset()
+    state = client.state()
     
     total_reward = 0.0
     step_count = 0
@@ -76,7 +75,6 @@ def run_episode(client: AccessibilityEnv, llm_client: OpenAI, max_steps: int = 2
     print(f"Known violations: {len(state.known_violations)}")
     print(f"{'='*60}\n")
     
-    done = False
     while not done and step_count < max_steps:
         step_count += 1
         
@@ -131,14 +129,10 @@ What test should we run next?"""
             print(f"⚠️  LLM error: {e}, using fallback action")
             test_type = "run_axe" if step_count == 1 else "complete_audit"
         
-        # Execute action
+        # Execute action - returns (observation, reward, done, info)
         action = AccessibilityAction(test_type=test_type)
-        result = client.step(action)
-        
-        observation = result.observation
-        reward = result.reward
-        done = result.done
-        state = result.state
+        observation, reward, done, info = client.step(action)
+        state = client.state()
         
         total_reward += reward
         action_history.append(test_type)
@@ -184,7 +178,7 @@ def run_task(task_name: str, difficulty: str, num_episodes: int = 3) -> float:
         print(f"\n--- Episode {episode_num + 1}/{num_episodes} ---")
         
         try:
-            with AccessibilityEnv(base_url=base_url) as client:
+            with AccessibilityEnv(base_url=base_url).sync() as client:
                 result = run_episode(client, llm_client)
                 episode_results.append(result)
                 
