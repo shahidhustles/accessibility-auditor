@@ -147,22 +147,25 @@ with AccessibilityEnv(base_url="http://localhost:8000") as env:
 ### Running Baseline Inference
 
 ```bash
-export OPENAI_API_KEY="your-key"
+export HF_TOKEN="your-openai-api-key"  # or OPENAI_API_KEY
 export API_BASE_URL="https://api.openai.com/v1"
-export MODEL_NAME="gpt-4"
+export MODEL_NAME="gpt-3.5-turbo"
+export SERVER_URL="http://localhost:8000"
 python inference.py
 ```
+
+> **Note:** The inference script reads `HF_TOKEN` environment variable (as per hackathon requirements) which should contain your OpenAI API key.
 
 ## Baseline Scores
 
 | Task | Baseline Score |
 |------|----------------|
-| Easy | 0.65 |
-| Medium | 0.52 |
-| Hard | 0.41 |
-| **Overall** | **0.53** |
+| Easy | 0.94 |
+| Medium | 0.53 |
+| Hard | 1.00 |
+| **Overall** | **0.82** |
 
-*Baseline: GPT-4 with simple prompting*
+*Baseline: GPT-3.5-turbo with systematic auditing strategy (run comprehensive axe scan, then targeted tests)*
 
 ## Deployment
 
