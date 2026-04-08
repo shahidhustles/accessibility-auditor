@@ -30,6 +30,11 @@ try:
     from .axe_runner import AxeRunner
     from . import test_runners
 except ImportError:
+    # Fallback for Docker/direct execution
+    import sys
+    from pathlib import Path
+    # Add parent directory to path if running as script
+    sys.path.insert(0, str(Path(__file__).parent.parent))
     from models import (
         AccessibilityAction,
         AccessibilityObservation,
@@ -37,9 +42,9 @@ except ImportError:
         ViolationDetail,
         PageMetadata,
     )
-    from browser_manager import BrowserManager
-    from axe_runner import AxeRunner
-    import test_runners
+    from server.browser_manager import BrowserManager
+    from server.axe_runner import AxeRunner
+    from server import test_runners
 
 
 class AccessibilityEnvironment(Environment):

@@ -6,6 +6,7 @@
 
 """Accessibility Auditor environment server components."""
 
-from .accessibility_auditor_environment import AccessibilityEnvironment
+# Don't auto-import to avoid circular import issues in Docker
+# Import explicitly when needed: from server.accessibility_auditor_environment import AccessibilityEnvironment
 
 __all__ = ["AccessibilityEnvironment"]

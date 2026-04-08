@@ -224,4 +224,3 @@ BSD 3-Clause License
 **Members**: Om Agarwal, Piyush Pagar (Lead), Shahid Patel  
 **Hackathon**: Meta x PyTorch OpenEnv - Round 1  
 **Deadline**: April 8, 2026
-

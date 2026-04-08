@@ -1,0 +1,37 @@
+# Exclude virtual environments
+.venv/
+venv/
+env/
+
+# Exclude git
+.git/
+
+# Exclude Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Exclude build artifacts
+*.egg-info/
+dist/
+build/
+
+# Exclude logs and results
+*.log
+inference_run.log
+
+# Exclude temporary files
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Exclude deployment guides (optional)
+DEPLOYMENT_GUIDE.md
+SUBMISSION_CHECKLIST.md
+
+# Exclude backups
+*.backup
+README.md.backup

@@ -38,7 +38,7 @@ except Exception as e:  # pragma: no cover
 try:
     from .accessibility_auditor_environment import AccessibilityEnvironment
     from ..models import AccessibilityAction, AccessibilityObservation
-except ModuleNotFoundError:
+except ImportError:
     from server.accessibility_auditor_environment import AccessibilityEnvironment
     from models import AccessibilityAction, AccessibilityObservation
 

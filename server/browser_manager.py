@@ -24,7 +24,15 @@ class BrowserManager:
             return  # Already started
         
         self.playwright = sync_playwright().start()
-        self.browser = self.playwright.chromium.launch(headless=True)
+        self.browser = self.playwright.chromium.launch(
+            headless=True,
+            args=[
+                "--no-sandbox",
+                "--disable-dev-shm-usage",
+                "--allow-file-access-from-files",
+                "--disable-web-security",
+            ],
+        )
         self.page = self.browser.new_page(viewport={"width": 1280, "height": 720})
     
     def navigate_to_url(self, url: str) -> bool:
